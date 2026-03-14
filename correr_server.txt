@@ -1,0 +1,4 @@
+paso 1---->cd biblioteca
+paso 2---->npm run dev 
+
+listo entran al local host que les da y ya 

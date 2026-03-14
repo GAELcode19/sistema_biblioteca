@@ -1,0 +1,11 @@
+1.-Instalar dependencias: Ejecutar composer install y npm install.
+
+2.-Configurar el entorno: Copiar el archivo .env.example (que sí se sube a GitHub) y renombrarlo a .env.
+
+3.-Crear una base de datos vacía: Ellos deben abrir su propio gestor (como phpMyAdmin, MySQL Workbench, etc.) y crear una base de datos nueva y en blanco.
+
+4.-Conectar su base de datos: Poner el nombre de esa nueva base de datos y su usuario/contraseña local en su nuevo archivo .env.
+
+5.-Generar la llave de la app: Ejecutar php artisan key:generate.
+
+6.-Crear las tablas: Ejecutar php artisan migrate. Aquí es donde Laravel lee tus archivos de migración y construye las tablas en la base de datos vacía de ellos.
