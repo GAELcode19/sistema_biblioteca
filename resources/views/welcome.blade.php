@@ -22,12 +22,12 @@
 
         .resena-item {
             background: #f8f9fa;
-            border-left: 4px solid #ffa723;
+            border-left: 4px solid #c17b11;
             padding: 10px;
             border-radius: 6px;
             font-size: 0.85rem;
             color: #444;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 4px rgba(20, 19, 19, 0.05);
             animation: slideIn 0.3s ease;
         }
 
