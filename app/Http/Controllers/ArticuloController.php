@@ -2,10 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Articulo;
 
 class ArticuloController extends Controller
 {
-    /* a qui pueden meter sus metodos para que funcionen, favor de no crear ningun otro controlador si no va a fallar ._. */
-    
+    public function index()
+    {
+        $articulos = Articulo::latest()->get();
+
+        return view('articulos.index', compact('articulos'));
+    }
+
+    public function show(Articulo $articulo)
+    {
+        return view('articulos.show', compact('articulo'));
+    }
 }
