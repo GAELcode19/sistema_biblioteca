@@ -6,6 +6,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biblioteca Interactiva</title>
     @vite(['resources/css/app.css', 'resources/css/diseno.css', 'resources/js/app.js'])
+    <style>
+        .contenido { display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; padding: 120px 20px; min-height: 100vh; }
+        .contenedor-busqueda { position: fixed; top: 0; right: 0; left: 0; background: #1b262f; padding: 15px 30px; display: flex; justify-content: flex-end; align-items: center; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        
+        .contenedor-resenas-locales {
+            max-height: 200px; 
+            overflow-y: auto;
+            margin: 15px 0;
+            padding-right: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px; 
+        }
+
+        .resena-item {
+            background: #f8f9fa;
+            border-left: 4px solid #ffa723;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: #444;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            animation: slideIn 0.3s ease;
+        }
+
+        .resena-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+            font-size: 0.75rem;
+            color: #888;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .contenedor-resenas-locales::-webkit-scrollbar { width: 4px; }
+        .contenedor-resenas-locales::-webkit-scrollbar-thumb { background: #ffa723; border-radius: 10px; }
+    
+        /* Estilos para el nuevo botón de PDF */
+        .boton_subir_pdf {
+            background-color: #e63946; /* Rojo para PDF */
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.3s;
+        }
+        .boton_subir_pdf:hover {
+            background-color: #c9302c;
+        }
+    </style>
 </head>
 
 <body>
@@ -15,6 +75,12 @@
             <input type="text" placeholder="Buscar libros..." name="q" style="padding: 10px; border-radius: 20px 0 0 20px; border: 1px solid #445; background: #25343f; color: white; outline: none;">
             <button type="submit" style="padding: 10px; border-radius: 0 20px 20px 0; border: 1px solid #445; background: #25343f; cursor: pointer;">🔍</button>
         </form>
+        
+        <button id="btn-activar-pdf" class="boton_subir_pdf">
+            📄 Subir PDF
+        </button>
+        <input type="file" id="input-subir-pdf" accept="application/pdf" style="display: none;">
+
         <button id="btn-subir-nuevo" class="boton_subir">Subir Nuevo</button>
     </div>
 
@@ -25,10 +91,29 @@
             const btnSubir = document.getElementById('btn-subir-nuevo');
             const contenedor = document.getElementById('contenedor-cartas');
 
-            function crearTarjeta(titulo, autor) {
+            // --- Lógica del Botón de PDF ---
+            const btnActivarPdf = document.getElementById('btn-activar-pdf');
+            const inputPdf = document.getElementById('input-subir-pdf');
+
+            btnActivarPdf.addEventListener('click', function() {
+                inputPdf.click(); // Abre la ventana de selección de archivos
+            });
+
+            // Detectar cuando el usuario selecciona un archivo
+            inputPdf.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const nombreArchivo = this.files[0].name;
+                    contenedor.prepend(crearTarjeta(nombreArchivo, "Documento PDF", true));
+                }
+            });
+
+            function crearTarjeta(titulo, autor, esPdf = false) {
                 const nuevaTarjeta = document.createElement('article');
                 nuevaTarjeta.className = 'card';
                 
+                // Determinamos qué logo mostrar
+                const logoHtml = esPdf ? '📄 PDF' : '<span class="ai-logo">AI</span>';
+
                 nuevaTarjeta.innerHTML = `
                     <div class="formulario-resena" style="padding: 20px; display: flex; flex-direction: column; min-height: 400px;">
                         <div class="card-header-internal">
@@ -55,6 +140,7 @@
                     </div>
                 `;
 
+                // --- Lógica del botón ENVIAR RESEÑA ---
                 const btnEnviar = nuevaTarjeta.querySelector('.btn-enviar-resena');
                 const input = nuevaTarjeta.querySelector('.input-opinion');
                 const cajaResenas = nuevaTarjeta.querySelector('.contenedor-resenas-locales');
@@ -62,11 +148,9 @@
                 btnEnviar.addEventListener('click', () => {
                     const texto = input.value.trim();
                     if (texto !== "") {
-                        // Quitar el mensaje de "No hay reseñas" si es la primera
                         const msgVacio = cajaResenas.querySelector('.sin-resenas');
                         if (msgVacio) msgVacio.remove();
 
-                        // Crear el bloque de la reseña
                         const fecha = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                         const div = document.createElement('div');
                         div.className = 'resena-item';
@@ -78,11 +162,8 @@
                             <div>${texto}</div>
                         `;
                         
-                        // Agregar al contenedor (al final)
                         cajaResenas.appendChild(div);
                         input.value = "";
-                        
-                        // Bajar el scroll para ver la última reseña
                         cajaResenas.scrollTop = cajaResenas.scrollHeight;
                     }
                 });
@@ -107,8 +188,7 @@
                 if (t && a) contenedor.prepend(crearTarjeta(t, a));
             });
 
-            // Ejemplo inicial
-            contenedor.appendChild(crearTarjeta("Articulo 1", "Autor 1"));
+            contenedor.appendChild(crearTarjeta("El Gran Gatsby", "F. Scott Fitzgerald"));
         });
     </script>
 </body>
