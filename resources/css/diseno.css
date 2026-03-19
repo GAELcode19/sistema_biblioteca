@@ -8,10 +8,10 @@ body {
 
 .contenido {
     display: flex;
+    flex-wrap: wrap; /* Esto permite que se pongan una al lado de otra */
+    gap: 30px;      /* Espacio entre tarjetas */
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
+    padding: 100px 20px;
 }
 
 /* --- TARJETA BLANCA (ESTILO IMAGEN) --- */
