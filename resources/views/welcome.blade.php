@@ -11,7 +11,7 @@
 
 <body>
 
-
+    <!-- Pantalla de carga -->
     <div id="pantalla-carga">
         <div class="book">
             <div class="book__pg-shadow"></div>
@@ -21,28 +21,21 @@
             <div class="book__pg book__pg--4"></div>
             <div class="book__pg book__pg--5"></div>
         </div>
-
         <h1 class="texto-cargando">Cargando<span class="dot1">.</span><span class="dot2">.</span><span class="dot3">.</span></h1>
     </div>
 
-
-  <div class="contenido">
+    <div class="contenido">
+        <!-- Formulario de reseña (si lo quieres mantener) -->
         <form action="#" method="get" class="formulario-resena">
-
-<!-- trabajo mich  -->
-<button class="Boton_editar" type="button">editar</button>
-
-
-<!-- de aqui para abajo no se mueve  -->
-
-    <button class="boton_subir" >subir</button>
-
+            <button class="Boton_editar" type="button">editar</button>
+            <button class="boton_subir" >subir</button>
 
             <div class="caja-texto">
                 <label for="opinion">Escribe tu reseña:</label>
                 <br>
                 <textarea id="opinion" name="opinion" rows="4" cols="50" placeholder="¿Qué te pareció el artículo?"></textarea>
             </div>
+
             <div class="rating">
                 <input value="5" name="rate" id="star5" type="radio">
                 <label title="text" for="star5"></label>
@@ -58,18 +51,21 @@
 
             <br>
             <button type="submit" class="btn-enviar">enviar reseña </button>
-
         </form>
+
+        <!-- Aquí se carga el listado de artículos (lo que te pasé como index.blade.php) -->
+        <h1>Bienvenido a la Biblioteca de Artículos</h1>
+        <p>Explora los artículos disponibles en nuestra biblioteca.</p>
+
+        <!-- Este bloque carga el listado de artículos -->
+        @include('articulos.index')
+
     </div>
 
-
-
-  
     <script>
         // Esto espera a que tu página termine de cargar
         window.addEventListener('load', function() {
             const pantallaCarga = document.getElementById('pantalla-carga');
-
             // Le damos 2 segundos (2000 milisegundos) para que el usuario alcance a ver el libro
             setTimeout(() => {
                 pantallaCarga.classList.add('oculto'); // Le pone la clase para desaparecer
