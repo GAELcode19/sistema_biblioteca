@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Categoria;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,11 +13,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // 1. Creamos las categorías (Importante para que aparezcan en tu formulario)
+        Categoria::create(['nombre' => 'Científico']);
+        Categoria::create(['nombre' => 'Literario']);
+        Categoria::create(['nombre' => 'Informativo']);
+        Categoria::create(['nombre' => 'Histórico']);
 
+        // 2. Creamos un usuario de prueba con tus campos personalizados
         User::factory()->create([
-            'name' => 'Test User',
+            'nombre_completo' => 'Miguel Mendoza',
+            'username' => 'Miguel123',
             'email' => 'test@example.com',
+            'password' => bcrypt('12345678'), // Siempre encriptar la contraseña
         ]);
     }
 }

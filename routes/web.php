@@ -1,15 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
+use App\Http\Controllers\ArticuloController;
 
-// 1. Esta ruta sirve para VER la página (GET)
-Route::get('/', function () {
-    return view('welcome'); // Asegúrate de que tu archivo se llame welcome.blade.php
-});
+// 1. Esta ruta usa el controlador para traer los datos reales de la base de datos (PostgreSQL)
+Route::get('/', [ArticuloController::class, 'index'])->name('home');
 
-// 2. Esta ruta sirve para RECIBIR los datos del formulario (POST)
-Route::post('/', function (Request $request) {
-    // Por ahora solo recarga la página sin error
-    return back(); 
-});
+// 2. Esta ruta es la que procesa el formulario de "Subir" y guarda el archivo PDF
+Route::post('/subir-articulo', [ArticuloController::class, 'store'])->name('articulos.store');
