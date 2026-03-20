@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,24 +9,20 @@ use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
+     * Los atributos que se pueden asignar masivamente.
      */
     protected $fillable = [
-        'name',
+        'nombre_completo', // Cambiado: antes decía 'name'
+        'username',        // Agregado
         'email',
         'password',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
+     * Los atributos que deben ocultarse para la serialización.
      */
     protected $hidden = [
         'password',
@@ -36,9 +30,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
+     * Los atributos que deben ser casteados.
      */
     protected function casts(): array
     {
@@ -49,11 +41,11 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the user's initials
+     * Obtener las iniciales del usuario basadas en su nombre completo
      */
     public function initials(): string
     {
-        return Str::of($this->name)
+        return Str::of($this->nombre_completo) // Cambiado a nombre_completo
             ->explode(' ')
             ->take(2)
             ->map(fn ($word) => Str::substr($word, 0, 1))
