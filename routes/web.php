@@ -3,8 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticuloController;
 
-// 1. Esta ruta usa el controlador para traer los datos reales de la base de datos (PostgreSQL)
+// La ruta principal
 Route::get('/', [ArticuloController::class, 'index'])->name('home');
 
-// 2. Esta ruta es la que procesa el formulario de "Subir" y guarda el archivo PDF
-Route::post('/subir-articulo', [ArticuloController::class, 'store'])->name('articulos.store');
+// Ruta para el botón "Subir Nuevo" (el prompt de JS)
+Route::post('/guardar-articulo', [ArticuloController::class, 'store'])->name('articulos.store');
+
+// Ruta para los comentarios
+Route::post('/guardar-resena', [ArticuloController::class, 'storeResena'])->name('resenas.store');
+
+// Ruta para borrar
+Route::delete('/eliminar-articulo/{id}', [ArticuloController::class, 'destroy'])->name('articulos.destroy');

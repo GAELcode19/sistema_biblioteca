@@ -6,66 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biblioteca Interactiva</title>
     @vite(['resources/css/app.css', 'resources/css/diseno.css', 'resources/js/app.js'])
-    <style>
-        .contenido { display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; padding: 120px 20px; min-height: 100vh; }
-        .contenedor-busqueda { position: fixed; top: 0; right: 0; left: 0; background: #1b262f; padding: 15px 30px; display: flex; justify-content: flex-end; align-items: center; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        
-        .contenedor-resenas-locales {
-            max-height: 200px; 
-            overflow-y: auto;
-            margin: 15px 0;
-            padding-right: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px; 
-        }
 
-        .resena-item {
-            background: #f8f9fa;
-            border-left: 4px solid #ffa723;
-            padding: 10px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            color: #444;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            animation: slideIn 0.3s ease;
-        }
-
-        .resena-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 4px;
-            font-size: 0.75rem;
-            color: #888;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-10px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .contenedor-resenas-locales::-webkit-scrollbar { width: 4px; }
-        .contenedor-resenas-locales::-webkit-scrollbar-thumb { background: #ffa723; border-radius: 10px; }
-    
-        /* Estilos para el nuevo botón de PDF */
-        .boton_subir_pdf {
-            background-color: #e63946; /* Rojo para PDF */
-            color: white;
-            padding: 10px 15px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-size: 0.9rem;
-            margin-right: 10px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: background 0.3s;
-        }
-        .boton_subir_pdf:hover {
-            background-color: #c9302c;
-        }
-    </style>
 </head>
 
 <body>
@@ -113,6 +54,9 @@
                 
                 // Determinamos qué logo mostrar
                 const logoHtml = esPdf ? '📄 PDF' : '<span class="ai-logo">AI</span>';
+                
+                // Creamos un ID único para que las estrellas de esta tarjeta no choquen con otras
+                const idUnico = 'tarjeta_' + Math.random().toString(36).substr(2, 9);
 
                 nuevaTarjeta.innerHTML = `
                     <div class="formulario-resena" style="padding: 20px; display: flex; flex-direction: column; min-height: 400px;">
@@ -129,6 +73,22 @@
                         </div>
 
                         <div class="seccion-input" style="margin-top: auto;">
+                            <div class="rating-container" style="margin-bottom: 10px;">
+                                <span class="rating-text" style="font-size: 0.9rem; margin-bottom: 5px; display: block;">Tu calificación:</span>
+                                <div class="rating">
+                                    <input value="5" name="rate_${idUnico}" id="star5_${idUnico}" type="radio">
+                                    <label title="5 estrellas" for="star5_${idUnico}"></label>
+                                    <input value="4" name="rate_${idUnico}" id="star4_${idUnico}" type="radio">
+                                    <label title="4 estrellas" for="star4_${idUnico}"></label>
+                                    <input value="3" name="rate_${idUnico}" id="star3_${idUnico}" type="radio">
+                                    <label title="3 estrellas" for="star3_${idUnico}"></label>
+                                    <input value="2" name="rate_${idUnico}" id="star2_${idUnico}" type="radio">
+                                    <label title="2 estrellas" for="star2_${idUnico}"></label>
+                                    <input value="1" name="rate_${idUnico}" id="star1_${idUnico}" type="radio">
+                                    <label title="1 estrella" for="star1_${idUnico}"></label>
+                                </div>
+                            </div>
+
                             <textarea class="input-opinion" rows="2" placeholder="Escribe tu comentario..." style="width:100%; border:1px solid #ddd; border-radius:8px; padding:10px; font-size: 0.9rem; resize: none;"></textarea>
                             <button type="button" class="boton_subir btn-enviar-resena" style="margin-top:8px; width:100%; padding: 10px;">Publicar Comentario</button>
                         </div>

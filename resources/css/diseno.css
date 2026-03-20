@@ -327,3 +327,64 @@ textarea:focus {
         /* Barra de scroll estética */
         .contenedor-resenas-locales::-webkit-scrollbar { width: 4px; }
         .contenedor-resenas-locales::-webkit-scrollbar-thumb { background: #ffa723; border-radius: 10px; }
+
+            
+        .contenido { display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; padding: 120px 20px; min-height: 100vh; }
+        .contenedor-busqueda { position: fixed; top: 0; right: 0; left: 0; background: #1b262f; padding: 15px 30px; display: flex; justify-content: flex-end; align-items: center; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        
+        .contenedor-resenas-locales {
+            max-height: 200px; 
+            overflow-y: auto;
+            margin: 15px 0;
+            padding-right: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px; 
+        }
+
+        .resena-item {
+            background: #f8f9fa;
+            border-left: 4px solid #ffa723;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: #444;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            animation: slideIn 0.3s ease;
+        }
+
+        .resena-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+            font-size: 0.75rem;
+            color: #888;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .contenedor-resenas-locales::-webkit-scrollbar { width: 4px; }
+        .contenedor-resenas-locales::-webkit-scrollbar-thumb { background: #ffa723; border-radius: 10px; }
+    
+        /* Estilos para el nuevo botón de PDF */
+        .boton_subir_pdf {
+            background-color: #e63946; /* Rojo para PDF */
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.3s;
+        }
+        .boton_subir_pdf:hover {
+            background-color: #c9302c;
+        }
+    
