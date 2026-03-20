@@ -14,3 +14,6 @@ Route::post('/guardar-resena', [ArticuloController::class, 'storeResena'])->name
 
 // Ruta para borrar
 Route::delete('/eliminar-articulo/{id}', [ArticuloController::class, 'destroy'])->name('articulos.destroy');
+
+// Ruta para editar
+Route::put('/editar-articulo/{id}', [ArticuloController::class, 'update'])->name('articulos.update');

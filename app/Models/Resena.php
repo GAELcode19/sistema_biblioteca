@@ -2,19 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Resena extends Model {
+class Resena extends Model
+{
     use HasFactory;
 
-    protected $fillable = ['articulo_id', 'nombre_usuario', 'comentario', 'puntuacion'];
+    // ESTO ES LO QUE FALTA: Dar permiso para llenar estas columnas
+protected $fillable = [
+    'articulo_id', 
+    'nombre_usuario', 
+    'puntuacion',   // <-- Cambiado
+    'comentario'    // <-- Cambiado
+];
 
-    /**
-     * Relación: Una reseña pertenece a un artículo.
-     */
-    public function articulo()
-    {
+    public function articulo() {
         return $this->belongsTo(Articulo::class);
     }
 }
